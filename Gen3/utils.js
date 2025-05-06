@@ -21,6 +21,22 @@ const find = (seed, f) => {
     return list;
 };  
 
+const print16 = (seed, min, max) => {
+    for(let i = 0; i <= max; i++){
+        seed = ISO(seed);
+        if (i >= min)
+            console.log((seed >> 16).toString(16))
+    }
+};
+
+const print32 = (seed, min, max) => {
+    for(let i = 0; i <= max; i++){
+        seed = ISO(seed);
+        if (i >= min)
+            console.log(seed.toString(16))
+    }
+};
+
 /*
 Pokerus Emerald:
     find(0n, f => [0x4000n, 0x8000n, 0xC0000n].includes(f))

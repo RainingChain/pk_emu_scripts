@@ -58,11 +58,11 @@ function printMessage(currentAdv, targetAdv, rngVal)
         console:log("Warning: The current battle can't be used to obtain Pokérus. Start another battle.")
     elseif diff > 0 then
         console:log("")
-        console:log("Reload a savestate during the battle and press A " .. diff .. " advance later.")
+        console:log("Reload a savestate during the battle and press A " .. diff .. " advances later.")
         console:log("  Ex: If the Current advance you wrote down is XXXXX: reload your savestate, press Ctrl+N until Current advance displays (XXXXX + " .. diff .. "), then press A + Ctrl+P.")
     else 
         console:log("")
-        console:log("Reload a savestate during the battle and press A " .. (-diff) .. " advance earlier.")       
+        console:log("Reload a savestate during the battle and press A " .. (-diff) .. " advances earlier.")       
     end
 end
 
@@ -157,7 +157,6 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
         0x08040048, --Ruby, Sapphire
     }
     local pokerusFuncAddr = POKERUS_FUNC_ADDRS[1]
-    console:log("read16=" .. emu:read16(0x08040068));
     if emu:read16(pokerusFuncAddr) == 46448 then
         console:log("Pokémon Ruby/Sapphire v1.1 or v1.2 detected")
     elseif emu:read16(pokerusFuncAddr) == 512 then
@@ -196,4 +195,4 @@ console:log("  - Pause the game with Ctrl+P.")
 console:log("  - Write down the Current advance, which is displayed on the panel above.")
 console:log("  - Press A with the game paused, and while holding A, unpause the game with Ctrl+P.")
 console:log("  - A message from the script will be displayed with additional steps.")
-console:log("  - If no message is displayed after the battle, try closing and opening again mGBA.")
+console:log("  - If no message is displayed after the battle, it's possibly an issue with mGBA. Try closing and opening mGBA again.")

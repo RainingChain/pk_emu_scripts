@@ -81,7 +81,7 @@ if gameVersionName == "Emerald" then
     end)
 end
 
-if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then  
+if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     local JUMP_DATA = {
         {0x41C64E6D, 0x6073}, {0xC2A29A69, 0xE97E7B6A}, {0xEE067F11, 0x31B0DDE4}, {0xCFDDDF21, 0x67DBB608},
         {0x5F748241, 0xCBA72510}, {0x8B2E1481, 0x1D29AE20}, {0x76006901, 0xBA84EC40}, {0x1711D201, 0x79F01880},

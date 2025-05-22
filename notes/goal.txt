@@ -1,0 +1,9 @@
+
+Goal:
+    find every variables that influences wild2 generation for route 102 (seedot)
+
+    create a cycle counter script that indicates whether its wild1/2/4
+
+    
+
+    input = 

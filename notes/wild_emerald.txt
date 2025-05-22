@@ -1,0 +1,66 @@
+export const signedToUnsigned = function(n:number){
+  return BigInt(new Uint32Array(new Int32Array([n]).buffer)[0]);
+}
+
+goal 1: predict advance between ChooseWildMonIndex_Land and pidlow
+    38055 %u 25,1               Random() % ENCOUNTER_CHANCE_LAND_MONS_TOTAL;
+    -1673339483 %u 24,48        ChooseWildMonLevel GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
+    24909 %u 100,1
+
+goal 2: pidlow and CreateBoxMon_ivs1  
+
+
+goal 2: predict advance between CreateBoxMon_ivs1 and CreateBoxMon_ivs2
+
+
+goal 1: predict advance between ChooseWildMonIndex_Land and CreateBoxMon_ivs1
+    add flag start/end
+    print modulo when flag is on
+
+
+before 
+Adv=2790, Cycle=  95121, Frame=2777 : ChooseWildMonIndex_Land 80b4acf
+
+Adv=2791, Cycle=  95766, Frame=2777 : ChooseWildMonLevel 80b4c97
+
+Adv=2792, Cycle= 163543, Frame=2777 : PickWildMonNature_v1 80b4e2f
+
+Adv=2793, Cycle= 163639, Frame=2777 : PickWildMonNature_v2 80b4e51
+
+Adv=2794, Cycle= 164298, Frame=2777 : CreateMonWithNature_pidlow 8067eb5
+Adv=2795, Cycle= 164378, Frame=2777 : CreateMonWithNature_pidhigh 8067ebb
+
+
+
+
+
+ChooseWildMonIndex_Land:
+    depends on slot
+
+ChooseWildMonLevel
+    GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
+    u8 ability = GetMonAbility(&gPlayerParty[0]);
+    if (ability == ABILITY_USTLE || ability == ABILITY_VITAL_SPIRIT || ability == ABILITY_PRESSURE)
+    if (Random() % 2 == 0)
+
+CreateWildMon
+    genderRatio
+
+    if (checkCuteCharm
+        && !GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
+        && GetMonAbility(&gPlayerParty[0]) == ABILITY_CUTE_CHARM
+        && Random() % 3 != 0)
+
+        CreateMonWithGenderNatureLetter
+CreateMonWithNature
+
+
+PickWildMonNature
+    // check synchronize for a Pokémon with the same ability
+    if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
+        && GetMonAbility(&gPlayerParty[0]) == ABILITY_SYNCHRONIZE
+        && Random() % 2 == 0)
+    {
+        return GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY) % NUM_NATURES;
+    }
+    return Random() % NUM_NATURES;

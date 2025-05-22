@@ -248,7 +248,7 @@ if gameVersionName == "Emerald" then
         end
 
         local frame = emu:currentFrame()
-        console:log("Adv=" .. currentAdvances .. ", Cycle=" .. cycleAsStr .. ", Frame=" .. frame .. " : " .. callerName .. " " .. callerAddr)
+        console:log("Adv=" .. currentAdvances .. ", Frame=" .. frame .. ", Cycle=" .. cycleAsStr .. " : " .. callerName .. " " .. callerAddr)
     end, 0x0806f5cc)
 end
 
@@ -371,7 +371,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
         local currentAdvances = getRngInfo()
         local frame = emu:currentFrame()
         local cycleAsStr = string.format("%-10s", emu_currentCycleInFrame())
-        console:log("Adv=" .. currentAdvances .. ", Cycle=" .. cycleAsStr .. ", Frame=" .. frame .. " : " .. callerName .. " " .. callerAddr)
+        console:log("Adv=" .. currentAdvances .. ", Frame=" .. frame .. ", Cycle=" .. cycleAsStr .. " : " .. callerName .. " " .. callerAddr)
     end, 0x08040ea4)
 end
 

@@ -1,9 +1,36 @@
 
 Goal:
-    find every variables that influences wild2 generation for route 102 (seedot)
+  given a setup (lead mon + config)
+    cycle range at start for each method
 
-    create a cycle counter script that indicates whether its wild1/2/4
+  ex: synchro jolly ->
+    [10,44] => method1,
+    [45, 60] => method2
+    [61,99] => method4
 
-    
+Subgoal:
+  given a setup, start at cycle = 0
+    increment the cycle counter, not caring about vblank.
 
-    input = 
+    cycle=120 when reaching pidlow
+    cycle=200 when reaching pidhigh
+
+    method3.push([120-200])
+
+    when call
+
+  start=1000,
+
+
+  reuse simulator?
+
+  X ->
+
+
+  find every variables that influences wild2 generation for route 102 (seedot)
+
+  create a reverse cycle counter script
+
+
+
+    input =

@@ -1,3 +1,7 @@
+
+
+
+
 export const signedToUnsigned = function(n:number){
   return BigInt(new Uint32Array(new Int32Array([n]).buffer)[0]);
 }
@@ -7,7 +11,7 @@ goal 1: predict advance between ChooseWildMonIndex_Land and pidlow
     -1673339483 %u 24,48        ChooseWildMonLevel GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
     24909 %u 100,1
 
-goal 2: pidlow and CreateBoxMon_ivs1  
+goal 2: pidlow and CreateBoxMon_ivs1
 
 
 goal 2: predict advance between CreateBoxMon_ivs1 and CreateBoxMon_ivs2
@@ -18,7 +22,7 @@ goal 1: predict advance between ChooseWildMonIndex_Land and CreateBoxMon_ivs1
     print modulo when flag is on
 
 
-before 
+before
 Adv=2790, Cycle=  95121, Frame=2777 : ChooseWildMonIndex_Land 80b4acf
 
 Adv=2791, Cycle=  95766, Frame=2777 : ChooseWildMonLevel 80b4c97

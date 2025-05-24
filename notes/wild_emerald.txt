@@ -1,6 +1,6 @@
 
-
-
+create tool that prints modulo
+create tool that calculate 
 
 export const signedToUnsigned = function(n:number){
   return BigInt(new Uint32Array(new Int32Array([n]).buffer)[0]);
@@ -14,7 +14,7 @@ goal 1: predict advance between ChooseWildMonIndex_Land and pidlow
 goal 2: pidlow and CreateBoxMon_ivs1
 
 
-goal 2: predict advance between CreateBoxMon_ivs1 and CreateBoxMon_ivs2
+goal 3: predict advance between CreateBoxMon_ivs1 and CreateBoxMon_ivs2
 
 
 goal 1: predict advance between ChooseWildMonIndex_Land and CreateBoxMon_ivs1

@@ -1,6 +1,17 @@
 
 import fs from "fs/promises";
 
+const compileFile = async (fileName) => {
+    let file = await fs.readFile(`./${fileName}`,'utf8');
+    const matches = file.match(/require"\w+.lua"/g);
+    if (!matches || !matches.length)
+        return file;
+
+    for (let match of matches){
+        file = file.replace(match, await compileFile(match.slice('require"'.length, -4)));
+    }
+    return file;
+};
 
 (async () => {
     const rseheader = await fs.readFile('./rse_header.lua','utf8');

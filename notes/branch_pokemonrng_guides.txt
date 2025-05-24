@@ -1,0 +1,5 @@
+rc/seedot: original guide with only text
+
+rc/largestTmp: modify generator to support mass_outbreak, looping thru maps etc.
+
+rc/generator_ng: cycle counter

@@ -77,7 +77,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     end
 
     emu:setBreakpoint(function()
-        local currentAdvances = getRngInfo()
+        local currentAdvances = getCurrentAdv()
         printMessage(currentAdvances, 26923)
 
         -- console:log("    r0=" .. string.format("%04x", emu:readRegister("r0")))
@@ -85,7 +85,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     end, pokerusFuncAddr + 0x10)
 
     emu:setBreakpoint(function()
-        local currentAdvances = getRngInfo()
+        local currentAdvances = getCurrentAdv()
         console:log("atkE5_pickup triggered. RNG Adv = " .. currentAdvances .. ". RNG Val = " ..
                         emu:read32(currentSeedAddr))
 
@@ -94,7 +94,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     end, 0x0802af68)
 
     callbacks:add("frame", function()
-        local currentAdvances = getRngInfo()
+        local currentAdvances = getCurrentAdv()
         GameInfo:clear()
         if currentAdvances < 0 then
             GameInfo:print("Error: Unable to determine the current advance. Reset the game with Ctrl+R.")

@@ -8,20 +8,19 @@ const compileFile = async (fileName) => {
         return file;
 
     for (let match of matches){
-        file = file.replace(match, await compileFile(match.slice('require"'.length, -4)));
+        file = file.replace(match, await compileFile(match.slice('require"'.length, -1)));
     }
     return file;
 };
 
-(async () => {
-    const rseheader = await fs.readFile('./rse_header.lua','utf8');
+const compileAndSaveFile = async (fileName, dest) => {
+    await fs.writeFile(dest, await compileFile(fileName));
+};
 
-    let pokerus = await fs.readFile('./pokerus.lua','utf8');
-    pokerus = pokerus.replace('require"rse_header.lua"', rseheader);
-    await fs.writeFile('../Gen3/pokerus.lua', pokerus);
-    
-    let log_rng_advances = await fs.readFile('./log_rng_advances.lua','utf8');
-    log_rng_advances = log_rng_advances.replace('require"rse_header.lua"', rseheader);
-    await fs.writeFile('../Gen3/log_rng_advances.lua', log_rng_advances);
+(async () => {
+    compileAndSaveFile('pokerus.lua', '../Gen3/pokerus.lua');
+    compileAndSaveFile('log_rng_advances.lua', '../Gen3/log_rng_advances.lua');
+
+    compileAndSaveFile('combined.lua', '../Gen3/combined.lua');
 })();
 

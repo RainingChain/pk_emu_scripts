@@ -13,7 +13,10 @@ License: GNU General Public License v3.0
  Exported :
     gameVersionName: Emerald | Ruby | Sapphire
     gameRevision: "" | 1.0 | 1.2
-    getRngInfo() => currentAdvance
+    getCurrentAdv() => currentAdvance
+    getNextRandVal() => u16
+    getCurrentRandValU32() => u32
+    LCRNG(s, mul, sum) => new s
 --]]
 
 if not emu then
@@ -44,14 +47,30 @@ end
 
 local gameRevision = ""
 
-local getRngInfo
+local getCurrentAdv
+local getCurrentRandValU32
+
+function LCRNG(s, mul, sum)
+    local a = (mul >> 16) * (s % 0x10000) + (s >> 16) * (mul % 0x10000)
+    local b = (mul % 0x10000) * (s % 0x10000) + (a % 0x10000) * 0x10000 + sum
+
+    return b % 0x100000000
+end
+
+local getNextRandVal = function() 
+    return LCRNG(getCurrentRandValU32() >> 16, 0x6073, 0x41c64e6d)
+end
 
 if gameVersionName == "Emerald" then
     gameRevision = "1.0"
-    getRngInfo = function()
+    getCurrentAdv = function()
         return emu:read32(0x020249c0)
     end
+    getCurrentRandValU32 = function()
+        return emu:read32(0x03005d80)
+    end
 end
+
 
 if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
 
@@ -77,13 +96,6 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
 
     local timerAddr = 0x3001790
     local currentSeedAddr = 0x3004818
-
-    function LCRNG(s, mul, sum)
-        local a = (mul >> 16) * (s % 0x10000) + (s >> 16) * (mul % 0x10000)
-        local b = (mul % 0x10000) * (s % 0x10000) + (a % 0x10000) * 0x10000 + sum
-
-        return b % 0x100000000
-    end
 
     local tempCurrentSeed = 0
 
@@ -115,7 +127,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
 
     local initialSeed, advances = 0, 0
 
-    getRngInfo = function()
+    getCurrentAdv = function()
         local timer = emu:read16(timerAddr)
         local current = emu:read32(currentSeedAddr)
 
@@ -201,7 +213,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     end
 
     emu:setBreakpoint(function()
-        local currentAdvances = getRngInfo()
+        local currentAdvances = getCurrentAdv()
         printMessage(currentAdvances, 26923)
 
         -- console:log("    r0=" .. string.format("%04x", emu:readRegister("r0")))
@@ -209,7 +221,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     end, pokerusFuncAddr + 0x10)
 
     emu:setBreakpoint(function()
-        local currentAdvances = getRngInfo()
+        local currentAdvances = getCurrentAdv()
         console:log("atkE5_pickup triggered. RNG Adv = " .. currentAdvances .. ". RNG Val = " ..
                         emu:read32(currentSeedAddr))
 
@@ -218,7 +230,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     end, 0x0802af68)
 
     callbacks:add("frame", function()
-        local currentAdvances = getRngInfo()
+        local currentAdvances = getCurrentAdv()
         GameInfo:clear()
         if currentAdvances < 0 then
             GameInfo:print("Error: Unable to determine the current advance. Reset the game with Ctrl+R.")

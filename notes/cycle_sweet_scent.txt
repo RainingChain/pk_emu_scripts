@@ -1,0 +1,16 @@
+between vblank-end to SweetScent:
+4858 - 4904. very consistent
+
+multiple party members have no impact on vblank
+
+vblank dur:
+46684 - 65095
+very rarely, about 32769
+depends on audio? i assume impossible to control for rng
+
+TODO: run many more attempts on good PC
+TODO: validate if vblanks depends on when loading savefile, i think yes
+
+---
+
+strategy:

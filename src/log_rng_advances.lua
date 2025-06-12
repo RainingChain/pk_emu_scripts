@@ -8,24 +8,15 @@ Credits: RainingChain, Real96
 License: GNU General Public License v3.0
 --]] 
 
-require"rse_header.lua"
+require"utils_vblank.lua"
 require"utils_caller_to_name.lua"
 
-local lastVblankCycle = 0
-local vblankStart = nil
 local cycleLastRandomCall = 0
 local lastTotalModuloCycle = 0
 
-function emu_currentCycleInFrame()
-  return emu:currentCycle() - lastVblankCycle
-end
 
-if gameVersionName == "Emerald" then    
-    -- VblankIntr start
-    emu:setBreakpoint(function()
-        lastVblankCycle = emu:currentCycle()
-    end, 0x08000738)
-
+if gameVersionName == "Emerald" then  
+    -- Random()
     emu:setBreakpoint(function()
         local caller = emu:readRegister("r14")
         if caller == 0x80007bf then -- VBlankIntr
@@ -68,11 +59,6 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     if gameRevision ~= "1.2" then
         console:log("Error: Only Ruby/Sapphire 1.2 is supported")
     end
-
-    -- VblankIntr start
-    emu:setBreakpoint(function()
-        lastVblankCycle = emu:currentCycle()
-    end, 0x08000570)
 
     emu:setBreakpoint(function()
         local caller = emu:readRegister("r14")

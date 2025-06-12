@@ -61,7 +61,7 @@ function caller_to_name(caller)
     elseif caller == 0x80b4e2f then
         callerName = "PickWildMonNature_forSynchronize"
     elseif caller == 0x80b4e51 then
-        callerName = "PickWildMonNature_ifNotSynchronized"
+        callerName = "PickWildMonNature_pickRandom"
     elseif caller == 0x8067eb5 then
         callerName = "CreateMonWithNature_pidlow"
     elseif caller == 0x8067ebb then
@@ -74,7 +74,10 @@ function caller_to_name(caller)
         callerName = "BattleAI_SetupAIData"
     elseif caller == 0x806ea81 then
         callerName = "SetWildMonHeldItem"
-
+    elseif caller == 0x80b4ebd then
+        callerName = "CreateWildMon_CuteCharmRandom"
+    elseif caller == 0x80b4ec7 then
+        callerName = "CreateWildMon_CuteCharm_modulo"
 
     elseif caller == 0x80b4ca1 then
         callerName = "ChooseWildMonLevel_levelRange"
@@ -87,6 +90,12 @@ function caller_to_name(caller)
     elseif caller == 0x806d091 then
         callerName = "GetNatureFromPersonality"
         
+    elseif caller == 0x8067fa3 then
+        callerName = "CreateMonWithGenderNatureLetter_pidlow"
+        
+    elseif caller == 0x8067fa9 then
+        callerName = "CreateMonWithGenderNatureLetter_pidhigh"
+
     --[[
     elseif caller == 0x then
         callerName = ""

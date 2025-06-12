@@ -1,5 +1,11 @@
 
--- Emerald only
+--[[
+Purpose: Print modulo calls between TrySweetScentEncounter and CreateBoxMon (2nd IVS)
+
+Ex: __umodsi3 (00000000,    24) CycleDur=    18 from GetSubstruct 806a283
+
+Emerald only
+--]]
 
 
 local calc_modulo_cycle_u = function(dividend, divisor)
@@ -357,7 +363,7 @@ function caller_to_name(caller)
     elseif caller == 0x80b4e2f then
         callerName = "PickWildMonNature_forSynchronize"
     elseif caller == 0x80b4e51 then
-        callerName = "PickWildMonNature_ifNotSynchronized"
+        callerName = "PickWildMonNature_pickRandom"
     elseif caller == 0x8067eb5 then
         callerName = "CreateMonWithNature_pidlow"
     elseif caller == 0x8067ebb then
@@ -370,7 +376,10 @@ function caller_to_name(caller)
         callerName = "BattleAI_SetupAIData"
     elseif caller == 0x806ea81 then
         callerName = "SetWildMonHeldItem"
-
+    elseif caller == 0x80b4ebd then
+        callerName = "CreateWildMon_CuteCharmRandom"
+    elseif caller == 0x80b4ec7 then
+        callerName = "CreateWildMon_CuteCharm_modulo"
 
     elseif caller == 0x80b4ca1 then
         callerName = "ChooseWildMonLevel_levelRange"
@@ -383,6 +392,12 @@ function caller_to_name(caller)
     elseif caller == 0x806d091 then
         callerName = "GetNatureFromPersonality"
         
+    elseif caller == 0x8067fa3 then
+        callerName = "CreateMonWithGenderNatureLetter_pidlow"
+        
+    elseif caller == 0x8067fa9 then
+        callerName = "CreateMonWithGenderNatureLetter_pidhigh"
+
     --[[
     elseif caller == 0x then
         callerName = ""
@@ -399,10 +414,11 @@ end
 
 local mustPrintModulo = true
 
-mustPrintModulo = false
+--mustPrintModulo = false
 
 local totalModuloCycle = 0
 
+--[[ -- NO_PROD
 -- TrySweetScentEncounter
 emu:setBreakpoint(function()
   mustPrintModulo = true
@@ -412,6 +428,7 @@ end, 0x08159fec)
 emu:setBreakpoint(function()
   mustPrintModulo = false
 end, 0x8067e17)
+--]]
 
 -- __umodsi3
 emu:setBreakpoint(function()
@@ -438,7 +455,6 @@ emu:setBreakpoint(function()
     .. string.format("%5s", tostring(cycle)) 
     .. " from "
     .. callerName
-    .. "\"]"
   )
 end, 0x082e7be0)
 
@@ -462,7 +478,6 @@ emu:setBreakpoint(function()
     .. string.format("%5s", tostring(cycle)) 
     .. " from "
     .. callerName
-    .. "\"]"
   )
 end, 0x082e7650)
 
@@ -475,6 +490,14 @@ Credits: RainingChain, Real96
 
 License: GNU General Public License v3.0
 --]] 
+
+--[[
+Exported:
+    emu_currentCycleInFrame
+    lastVblankCycleStart
+    lastVblankCycleEnd
+
+--]]
 
 
 --[[
@@ -613,6 +636,34 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
         return advances
     end
 end
+
+local lastVblankCycleStart = 0
+local lastVblankCycleEnd = 0
+
+function emu_currentCycleInFrame()
+  return emu:currentCycle() - lastVblankCycleStart
+end  
+
+if gameVersionName == "Emerald" then  
+    -- VblankIntr start
+    emu:setBreakpoint(function()
+        lastVblankCycleStart = emu:currentCycle()
+    end, 0x08000738)
+
+    -- VblankIntr end
+    emu:setBreakpoint(function()
+        lastVblankCycleEnd = emu:currentCycle()
+        console:log("vblank") -- NO_PROD
+    end, 0x80007dA)
+end
+
+if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
+    -- VblankIntr start
+    emu:setBreakpoint(function()
+        lastVblankCycleStart = emu:currentCycle()
+    end, 0x08000570)
+end
+
 -- Emerald
 
 function caller_to_name(caller)
@@ -676,7 +727,7 @@ function caller_to_name(caller)
     elseif caller == 0x80b4e2f then
         callerName = "PickWildMonNature_forSynchronize"
     elseif caller == 0x80b4e51 then
-        callerName = "PickWildMonNature_ifNotSynchronized"
+        callerName = "PickWildMonNature_pickRandom"
     elseif caller == 0x8067eb5 then
         callerName = "CreateMonWithNature_pidlow"
     elseif caller == 0x8067ebb then
@@ -689,7 +740,10 @@ function caller_to_name(caller)
         callerName = "BattleAI_SetupAIData"
     elseif caller == 0x806ea81 then
         callerName = "SetWildMonHeldItem"
-
+    elseif caller == 0x80b4ebd then
+        callerName = "CreateWildMon_CuteCharmRandom"
+    elseif caller == 0x80b4ec7 then
+        callerName = "CreateWildMon_CuteCharm_modulo"
 
     elseif caller == 0x80b4ca1 then
         callerName = "ChooseWildMonLevel_levelRange"
@@ -702,6 +756,12 @@ function caller_to_name(caller)
     elseif caller == 0x806d091 then
         callerName = "GetNatureFromPersonality"
         
+    elseif caller == 0x8067fa3 then
+        callerName = "CreateMonWithGenderNatureLetter_pidlow"
+        
+    elseif caller == 0x8067fa9 then
+        callerName = "CreateMonWithGenderNatureLetter_pidhigh"
+
     --[[
     elseif caller == 0x then
         callerName = ""
@@ -716,21 +776,12 @@ function caller_to_name(caller)
 end
 
 
-local lastVblankCycle = 0
-local vblankStart = nil
 local cycleLastRandomCall = 0
 local lastTotalModuloCycle = 0
 
-function emu_currentCycleInFrame()
-  return emu:currentCycle() - lastVblankCycle
-end
 
-if gameVersionName == "Emerald" then    
-    -- VblankIntr start
-    emu:setBreakpoint(function()
-        lastVblankCycle = emu:currentCycle()
-    end, 0x08000738)
-
+if gameVersionName == "Emerald" then  
+    -- Random()
     emu:setBreakpoint(function()
         local caller = emu:readRegister("r14")
         if caller == 0x80007bf then -- VBlankIntr
@@ -773,11 +824,6 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     if gameRevision ~= "1.2" then
         console:log("Error: Only Ruby/Sapphire 1.2 is supported")
     end
-
-    -- VblankIntr start
-    emu:setBreakpoint(function()
-        lastVblankCycle = emu:currentCycle()
-    end, 0x08000570)
 
     emu:setBreakpoint(function()
         local caller = emu:readRegister("r14")
@@ -905,3 +951,27 @@ callbacks:add("frame", function()
     end
 end)
 
+
+local printStack = function(what)
+    local str = what 
+        .. " : AdvBef=" .. getCurrentAdv() 
+        .. ", Frame=" .. emu:currentFrame() 
+        .. ", Cycle=" .. emu_currentCycleInFrame()
+
+    console:log(str)
+end
+
+-- SweetScentWildEncounter()
+emu:setBreakpoint(function()
+    printStack("SweetScentWildEncounter")
+end, 0x80b5578)
+
+-- DoMassOutbreakEncounterTest()
+emu:setBreakpoint(function()
+    printStack("DoMassOutbreakEncounterTest")
+end, 0x080b50dc)
+
+-- CreateMon()
+emu:setBreakpoint(function()
+    printStack("CreateMon")
+end, 0x08067b4c)

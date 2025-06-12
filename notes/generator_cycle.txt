@@ -1,0 +1,9 @@
+
+
+no lead with gender
+
+synchronize success
+synchronize fail
+
+cute success
+cute fail

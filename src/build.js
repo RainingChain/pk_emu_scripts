@@ -20,7 +20,8 @@ const compileAndSaveFile = async (fileName, dest) => {
 (async () => {
     compileAndSaveFile('pokerus.lua', '../Gen3/pokerus.lua');
     compileAndSaveFile('log_rng_advances.lua', '../Gen3/log_rng_advances.lua');
+    compileAndSaveFile('log_modulo.lua', '../Gen3/log_modulo.lua');
 
-    compileAndSaveFile('combined.lua', '../Gen3/combined.lua');
+    compileAndSaveFile('log_sweet_scent_cycle.lua', '../Gen3/log_sweet_scent_cycle.lua');
 })();
 

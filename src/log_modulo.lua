@@ -1,14 +1,21 @@
--- Emerald only
+--[[
+Purpose: Print modulo calls between TrySweetScentEncounter and CreateBoxMon (2nd IVS)
+
+Ex: __umodsi3 (00000000,    24) CycleDur=    18 from GetSubstruct 806a283
+
+Emerald only
+--]]
 
 require"utils_calc_modulo.lua"
 require"utils_caller_to_name.lua"
 
 local mustPrintModulo = true
 
-mustPrintModulo = false
+--mustPrintModulo = false
 
 local totalModuloCycle = 0
 
+--[[ -- NO_PROD
 -- TrySweetScentEncounter
 emu:setBreakpoint(function()
   mustPrintModulo = true
@@ -18,6 +25,7 @@ end, 0x08159fec)
 emu:setBreakpoint(function()
   mustPrintModulo = false
 end, 0x8067e17)
+--]]
 
 -- __umodsi3
 emu:setBreakpoint(function()
@@ -44,7 +52,6 @@ emu:setBreakpoint(function()
     .. string.format("%5s", tostring(cycle)) 
     .. " from "
     .. callerName
-    .. "\"]"
   )
 end, 0x082e7be0)
 
@@ -68,6 +75,5 @@ emu:setBreakpoint(function()
     .. string.format("%5s", tostring(cycle)) 
     .. " from "
     .. callerName
-    .. "\"]"
   )
 end, 0x082e7650)

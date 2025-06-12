@@ -8,7 +8,7 @@ Credits: RainingChain, Real96
 License: GNU General Public License v3.0
 --]] 
 
-require"rse_header.lua"
+require"utils_rse_header.lua"
 
 function printMessage(currentAdv, targetAdv, rngVal)
     console:log("-------------------------------------------------")

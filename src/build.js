@@ -23,5 +23,5 @@ const compileAndSaveFile = async (fileName, dest) => {
     compileAndSaveFile('log_modulo.lua', '../Gen3/log_modulo.lua');
 
     compileAndSaveFile('log_sweet_scent_cycle.lua', '../Gen3/log_sweet_scent_cycle.lua');
+    compileAndSaveFile('wild3_generator_cycle_logger.lua', '../Gen3/wild3_generator_cycle_logger.lua');
 })();
-

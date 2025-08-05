@@ -82,7 +82,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
         elseif caller == 0x8085055 then
             callerName = "DoWildEncounterRateDiceRoll"    
         elseif caller == 0x8084d71 then
-            callerName = "ChooseWildMonLevel"    
+            callerName = "ChooseWildMonLevel_Random1"    
         elseif caller == 0x803ab01 then
             callerName = "CreateMonWithNature_pidlow" 
         elseif caller == 0x803ab07 then

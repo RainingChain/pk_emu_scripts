@@ -24,7 +24,6 @@ if gameVersionName == "Emerald" then
     -- VblankIntr end
     emu:setBreakpoint(function()
         lastVblankCycleEnd = emu:currentCycle()
-        console:log("vblank") -- NO_PROD
     end, 0x80007dA)
 end
 

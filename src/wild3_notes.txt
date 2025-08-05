@@ -1,0 +1,14 @@
+
+egg:
+    SweetScentWildEncounter
+    DoMassOutbreakEncounterTest
+    ChooseWildMonIndex_Land
+    ChooseWildMonLevel
+    PickWildMonNature_pickRandom
+    CreateMonWithNature_pidlow (first)
+    CreateMonWithNature_pidhigh (last)
+    CreateBoxMon_ivs1
+    CreateBoxMon_ivs2
+
+
+

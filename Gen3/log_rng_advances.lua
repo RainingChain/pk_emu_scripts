@@ -170,7 +170,6 @@ if gameVersionName == "Emerald" then
     -- VblankIntr end
     emu:setBreakpoint(function()
         lastVblankCycleEnd = emu:currentCycle()
-        console:log("vblank") -- NO_PROD
     end, 0x80007dA)
 end
 
@@ -183,7 +182,7 @@ end
 
 -- Emerald
 
-function caller_to_name(caller)
+function caller_to_name(caller, withAddress)
     local callerAddr = string.format("%04x", caller)
     local callerName = "???"
     if caller == 0x816fa85 then
@@ -193,7 +192,7 @@ function caller_to_name(caller)
     elseif caller == 0x80b57f9 then
         callerName = "GetLocalWildMon"
     elseif caller == 0x80b4acf then
-        callerName = "ChooseWildMonIndex_Land"
+        callerName = "ChooseWildMonIndex_Land_Random"
     elseif caller == 0x80b4b8b then
         callerName = "ChooseWildMonIndex_WaterRock"            
     elseif caller == 0x80ebf75 then
@@ -240,19 +239,19 @@ function caller_to_name(caller)
     elseif caller == 0x81968c5 then
         callerName = "GetBattleMatchCallText"
     elseif caller == 0x80b4c97 then
-        callerName = "ChooseWildMonLevel"
+        callerName = "ChooseWildMonLevel_RandomLvl"
     elseif caller == 0x80b4e2f then
-        callerName = "PickWildMonNature_forSynchronize"
+        callerName = "PickWildMonNature_RandomTestSynchro"
     elseif caller == 0x80b4e51 then
-        callerName = "PickWildMonNature_pickRandom"
+        callerName = "PickWildMonNature_RandomPickNature"
     elseif caller == 0x8067eb5 then
-        callerName = "CreateMonWithNature_pidlow"
+        callerName = "CreateMonWithNature_RandomPidLow"
     elseif caller == 0x8067ebb then
-        callerName = "CreateMonWithNature_pidhigh"
+        callerName = "CreateMonWithNature_RandomPidHigh"
     elseif caller == 0x8067dcd then
-        callerName = "CreateBoxMon_ivs1"
+        callerName = "CreateBoxMon_RandomIvs1"
     elseif caller == 0x8067e17 then
-        callerName = "CreateBoxMon_ivs2"
+        callerName = "CreateBoxMon_RandomIvs2"
     elseif caller == 0x81309d3 then
         callerName = "BattleAI_SetupAIData"
     elseif caller == 0x806ea81 then
@@ -263,7 +262,7 @@ function caller_to_name(caller)
         callerName = "CreateWildMon_CuteCharm_modulo"
 
     elseif caller == 0x80b4ca1 then
-        callerName = "ChooseWildMonLevel_levelRange"
+        callerName = "ChooseWildMonLevel_RandomLvl"
     elseif caller == 0x806a283 then
         callerName = "GetSubstruct"
         
@@ -289,7 +288,12 @@ function caller_to_name(caller)
 
     --]]
     end
-    return callerName .. " " .. callerAddr
+
+    if withAddress ~= false then
+        return callerName .. " " .. callerAddr
+    else
+        return callerName
+    end
 end
 
 
@@ -364,7 +368,7 @@ if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
         elseif caller == 0x8085055 then
             callerName = "DoWildEncounterRateDiceRoll"    
         elseif caller == 0x8084d71 then
-            callerName = "ChooseWildMonLevel"    
+            callerName = "ChooseWildMonLevel_Random1"    
         elseif caller == 0x803ab01 then
             callerName = "CreateMonWithNature_pidlow" 
         elseif caller == 0x803ab07 then

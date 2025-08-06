@@ -9,6 +9,7 @@ License: GNU General Public License v3.0
 --]] 
 
 require"utils_vblank.lua"
+require"log_modulo.lua"
 require"utils_caller_to_name.lua"
 
 local cycleLastRandomCall = 0

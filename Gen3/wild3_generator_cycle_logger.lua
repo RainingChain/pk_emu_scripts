@@ -581,9 +581,14 @@ function caller_to_name(caller, withAddress)
 end
 
 
-function newState(cycleAtSweetScentWildEncounter)
+function getCurrentAdv()
+    return emu:read32(0x020249c0)
+end
+
+function newState()
     return {
-        cycleAtSweetScentWildEncounter = cycleAtSweetScentWildEncounter,
+        advanceAtSweetScentWildEncounter = 0,
+        cycleAtSweetScentWildEncounter = 0,
         cycleAtMoments = {},
         reachedPidLow = false,
         reachedPidHigh = false,
@@ -592,6 +597,8 @@ end
 
 function printState(state)
     local str = "{\n"
+    str = str .. " \"advanceAtSweetScentWildEncounter\":" .. state.advanceAtSweetScentWildEncounter .. ",\n"   
+    str = str .. " \"cycleAtSweetScentWildEncounter\":" .. state.cycleAtSweetScentWildEncounter .. ",\n"    
     str = str .. " \"cycleAtMoments\":[\n"
     for i = 1, #state.cycleAtMoments do 
         local m = state.cycleAtMoments[i]
@@ -608,7 +615,7 @@ function printState(state)
     console:log(str)
 end
 
-local state = newState(0)
+local state = newState()
 
 function add_moment(moment)
     table.insert(state.cycleAtMoments, {
@@ -623,7 +630,9 @@ end
 
 -- SweetScentWildEncounter()
 emu:setBreakpoint(function()
-    state = newState(emu_currentCycleInFrame())
+    state = newState()
+    state.cycleAtSweetScentWildEncounter = emu_currentCycleInFrame()
+    state.advanceAtSweetScentWildEncounter = getCurrentAdv()
 end, 0x80b5578)
  
 -- Random()
@@ -645,6 +654,7 @@ emu:setBreakpoint(function()
     if callerName == "ChooseWildMonIndex_Land_Random" or 
             callerName == "ChooseWildMonLevel_RandomLvl"  or 
             callerName == "PickWildMonNature_RandomTestSynchro"  or 
+            callerName == "PickWildMonNature_RandomPickNature"  or 
             callerName == "CreateBoxMon_RandomIvs1"  then
         add_moment(callerName)
     end
@@ -652,7 +662,7 @@ emu:setBreakpoint(function()
     if callerName == "CreateBoxMon_RandomIvs2" then
         add_moment(callerName)
         printState(state)
-        state = newState(0)      
+        state = newState()      
     end
 
     if callerName == "CreateMonWithNature_RandomPidLow" and 
@@ -676,6 +686,6 @@ end, 0x0806f5cc)
 emu:setBreakpoint(function()
     if state.cycleAtSweetScentWildEncounter ~= 0 then 
         printState(state)
-        state = newState(0)
+        state = newState()
     end
 end, 0x80007dA)

@@ -26,7 +26,7 @@ function printState(state)
         local m = state.cycleAtMoments[i]
         str = str .. "  {\"moment\":\"" .. m.moment .. "\", \"cycle\":" .. m.cycle .. "}"
 
-        if i ~= state.cycleAtMoments[i] then
+        if i ~= #state.cycleAtMoments then
             str = str .. ","
         end
         str = str .. "\n"

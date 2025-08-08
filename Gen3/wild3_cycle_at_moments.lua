@@ -541,7 +541,7 @@ function caller_to_name(caller, withAddress)
     elseif caller == 0x806ea81 then
         callerName = "SetWildMonHeldItem"
     elseif caller == 0x80b4ebd then
-        callerName = "CreateWildMon_CuteCharmRandom"
+        callerName = "CreateWildMon_RandomTestCuteCharm"
     elseif caller == 0x80b4ec7 then
         callerName = "CreateWildMon_CuteCharm_modulo"
 
@@ -655,6 +655,7 @@ emu:setBreakpoint(function()
             callerName == "ChooseWildMonLevel_RandomLvl"  or 
             callerName == "PickWildMonNature_RandomTestSynchro"  or 
             callerName == "PickWildMonNature_RandomPickNature"  or 
+            callerName == "CreateWildMon_RandomTestCuteCharm"  or 
             callerName == "CreateBoxMon_RandomIvs1"  then
         add_moment(callerName)
     end

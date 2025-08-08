@@ -197,6 +197,8 @@ end
 
 if gameVersionName == "Ruby" or gameVersionName == "Sapphire" then
     -- https://raw.githubusercontent.com/pret/pokeruby/refs/heads/symbols/pokesapphire_rev2.sym
+    local currentSeedAddr = 0x3004818
+    
     -- RandomlyGivePartyPokerus
     local POKERUS_FUNC_ADDRS = {
         0x08040068, -- Ruby Rev1, Ruby Rev2, Sapphire Rev1, Sapphire Rev2,

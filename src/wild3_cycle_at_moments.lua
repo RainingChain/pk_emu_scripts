@@ -77,6 +77,7 @@ emu:setBreakpoint(function()
             callerName == "ChooseWildMonLevel_RandomLvl"  or 
             callerName == "PickWildMonNature_RandomTestSynchro"  or 
             callerName == "PickWildMonNature_RandomPickNature"  or 
+            callerName == "CreateWildMon_RandomTestCuteCharm"  or 
             callerName == "CreateBoxMon_RandomIvs1"  then
         add_moment(callerName)
     end

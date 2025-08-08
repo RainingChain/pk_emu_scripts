@@ -75,7 +75,7 @@ function caller_to_name(caller, withAddress)
     elseif caller == 0x806ea81 then
         callerName = "SetWildMonHeldItem"
     elseif caller == 0x80b4ebd then
-        callerName = "CreateWildMon_CuteCharmRandom"
+        callerName = "CreateWildMon_RandomTestCuteCharm"
     elseif caller == 0x80b4ec7 then
         callerName = "CreateWildMon_CuteCharm_modulo"
 
